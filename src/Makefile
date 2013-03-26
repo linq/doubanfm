@@ -62,9 +62,12 @@ CONFIG_CLEAN_FILES =
 CONFIG_CLEAN_VPATH_FILES =
 am__installdirs = "$(DESTDIR)$(bindir)"
 PROGRAMS = $(bin_PROGRAMS)
-am_douban_OBJECTS = httpHelper.$(OBJEXT) douban.$(OBJEXT)
+am_douban_OBJECTS = douban-httpHelper.$(OBJEXT) \
+	douban-douban.$(OBJEXT) douban-json.$(OBJEXT)
 douban_OBJECTS = $(am_douban_OBJECTS)
 douban_DEPENDENCIES = ../lib/libcjson.a
+douban_LINK = $(CCLD) $(douban_CFLAGS) $(CFLAGS) $(AM_LDFLAGS) \
+	$(LDFLAGS) -o $@
 AM_V_P = $(am__v_P_$(V))
 am__v_P_ = $(am__v_P_$(AM_DEFAULT_VERBOSITY))
 am__v_P_0 = false
@@ -81,6 +84,10 @@ DEFAULT_INCLUDES = -I. -I$(top_builddir)
 depcomp = $(SHELL) $(top_srcdir)/depcomp
 am__depfiles_maybe = depfiles
 am__mv = mv -f
+AM_V_lt = $(am__v_lt_$(V))
+am__v_lt_ = $(am__v_lt_$(AM_DEFAULT_VERBOSITY))
+am__v_lt_0 = --silent
+am__v_lt_1 = 
 COMPILE = $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) \
 	$(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS)
 AM_V_CC = $(am__v_CC_$(V))
@@ -148,7 +155,7 @@ INSTALL_SCRIPT = ${INSTALL}
 INSTALL_STRIP_PROGRAM = $(install_sh) -c -s
 LDFLAGS = 
 LIBOBJS = 
-LIBS = -lcurl
+LIBS = -lcurl -lm
 LTLIBOBJS = 
 MAKEINFO = ${SHELL} /home/linq/code/doubanfm/missing makeinfo
 MKDIR_P = /usr/bin/mkdir -p
@@ -209,8 +216,9 @@ top_build_prefix = ../
 top_builddir = ..
 top_srcdir = ..
 AUTOMAKE_OPTIONS = foreign
-douban_SOURCES = http.h httpHelper.c douban.c
+douban_SOURCES = http.h httpHelper.c douban.c douban.h json.h json.c
 douban_LDADD = ../lib/libcjson.a
+douban_CFLAGS = -I ../lib/
 all: all-am
 
 .SUFFIXES:
@@ -289,7 +297,7 @@ clean-binPROGRAMS:
 	-test -z "$(bin_PROGRAMS)" || rm -f $(bin_PROGRAMS)
 douban$(EXEEXT): $(douban_OBJECTS) $(douban_DEPENDENCIES) $(EXTRA_douban_DEPENDENCIES) 
 	@rm -f douban$(EXEEXT)
-	$(AM_V_CCLD)$(LINK) $(douban_OBJECTS) $(douban_LDADD) $(LIBS)
+	$(AM_V_CCLD)$(douban_LINK) $(douban_OBJECTS) $(douban_LDADD) $(LIBS)
 
 mostlyclean-compile:
 	-rm -f *.$(OBJEXT)
@@ -297,8 +305,9 @@ mostlyclean-compile:
 distclean-compile:
 	-rm -f *.tab.c
 
-include ./$(DEPDIR)/douban.Po
-include ./$(DEPDIR)/httpHelper.Po
+include ./$(DEPDIR)/douban-douban.Po
+include ./$(DEPDIR)/douban-httpHelper.Po
+include ./$(DEPDIR)/douban-json.Po
 
 .c.o:
 	$(AM_V_CC)$(COMPILE) -MT $@ -MD -MP -MF $(DEPDIR)/$*.Tpo -c -o $@ $<
@@ -313,6 +322,48 @@ include ./$(DEPDIR)/httpHelper.Po
 #	$(AM_V_CC)source='$<' object='$@' libtool=no \
 #	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
 #	$(AM_V_CC_no)$(COMPILE) -c `$(CYGPATH_W) '$<'`
+
+douban-httpHelper.o: httpHelper.c
+	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(douban_CFLAGS) $(CFLAGS) -MT douban-httpHelper.o -MD -MP -MF $(DEPDIR)/douban-httpHelper.Tpo -c -o douban-httpHelper.o `test -f 'httpHelper.c' || echo '$(srcdir)/'`httpHelper.c
+	$(AM_V_at)$(am__mv) $(DEPDIR)/douban-httpHelper.Tpo $(DEPDIR)/douban-httpHelper.Po
+#	$(AM_V_CC)source='httpHelper.c' object='douban-httpHelper.o' libtool=no \
+#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
+#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(douban_CFLAGS) $(CFLAGS) -c -o douban-httpHelper.o `test -f 'httpHelper.c' || echo '$(srcdir)/'`httpHelper.c
+
+douban-httpHelper.obj: httpHelper.c
+	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(douban_CFLAGS) $(CFLAGS) -MT douban-httpHelper.obj -MD -MP -MF $(DEPDIR)/douban-httpHelper.Tpo -c -o douban-httpHelper.obj `if test -f 'httpHelper.c'; then $(CYGPATH_W) 'httpHelper.c'; else $(CYGPATH_W) '$(srcdir)/httpHelper.c'; fi`
+	$(AM_V_at)$(am__mv) $(DEPDIR)/douban-httpHelper.Tpo $(DEPDIR)/douban-httpHelper.Po
+#	$(AM_V_CC)source='httpHelper.c' object='douban-httpHelper.obj' libtool=no \
+#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
+#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(douban_CFLAGS) $(CFLAGS) -c -o douban-httpHelper.obj `if test -f 'httpHelper.c'; then $(CYGPATH_W) 'httpHelper.c'; else $(CYGPATH_W) '$(srcdir)/httpHelper.c'; fi`
+
+douban-douban.o: douban.c
+	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(douban_CFLAGS) $(CFLAGS) -MT douban-douban.o -MD -MP -MF $(DEPDIR)/douban-douban.Tpo -c -o douban-douban.o `test -f 'douban.c' || echo '$(srcdir)/'`douban.c
+	$(AM_V_at)$(am__mv) $(DEPDIR)/douban-douban.Tpo $(DEPDIR)/douban-douban.Po
+#	$(AM_V_CC)source='douban.c' object='douban-douban.o' libtool=no \
+#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
+#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(douban_CFLAGS) $(CFLAGS) -c -o douban-douban.o `test -f 'douban.c' || echo '$(srcdir)/'`douban.c
+
+douban-douban.obj: douban.c
+	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(douban_CFLAGS) $(CFLAGS) -MT douban-douban.obj -MD -MP -MF $(DEPDIR)/douban-douban.Tpo -c -o douban-douban.obj `if test -f 'douban.c'; then $(CYGPATH_W) 'douban.c'; else $(CYGPATH_W) '$(srcdir)/douban.c'; fi`
+	$(AM_V_at)$(am__mv) $(DEPDIR)/douban-douban.Tpo $(DEPDIR)/douban-douban.Po
+#	$(AM_V_CC)source='douban.c' object='douban-douban.obj' libtool=no \
+#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
+#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(douban_CFLAGS) $(CFLAGS) -c -o douban-douban.obj `if test -f 'douban.c'; then $(CYGPATH_W) 'douban.c'; else $(CYGPATH_W) '$(srcdir)/douban.c'; fi`
+
+douban-json.o: json.c
+	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(douban_CFLAGS) $(CFLAGS) -MT douban-json.o -MD -MP -MF $(DEPDIR)/douban-json.Tpo -c -o douban-json.o `test -f 'json.c' || echo '$(srcdir)/'`json.c
+	$(AM_V_at)$(am__mv) $(DEPDIR)/douban-json.Tpo $(DEPDIR)/douban-json.Po
+#	$(AM_V_CC)source='json.c' object='douban-json.o' libtool=no \
+#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
+#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(douban_CFLAGS) $(CFLAGS) -c -o douban-json.o `test -f 'json.c' || echo '$(srcdir)/'`json.c
+
+douban-json.obj: json.c
+	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(douban_CFLAGS) $(CFLAGS) -MT douban-json.obj -MD -MP -MF $(DEPDIR)/douban-json.Tpo -c -o douban-json.obj `if test -f 'json.c'; then $(CYGPATH_W) 'json.c'; else $(CYGPATH_W) '$(srcdir)/json.c'; fi`
+	$(AM_V_at)$(am__mv) $(DEPDIR)/douban-json.Tpo $(DEPDIR)/douban-json.Po
+#	$(AM_V_CC)source='json.c' object='douban-json.obj' libtool=no \
+#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
+#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(douban_CFLAGS) $(CFLAGS) -c -o douban-json.obj `if test -f 'json.c'; then $(CYGPATH_W) 'json.c'; else $(CYGPATH_W) '$(srcdir)/json.c'; fi`
 
 ID: $(am__tagged_files)
 	$(am__define_uniq_tagged_files); mkid -fID $$unique
