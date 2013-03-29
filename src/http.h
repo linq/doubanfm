@@ -15,4 +15,5 @@ enum httpMethod {
 
 // 执行http请求
 string *request_url(char *url, enum httpMethod method);
+void free_string(string *str);
 #endif

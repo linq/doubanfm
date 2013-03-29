@@ -60,6 +60,11 @@ string *request_url(char *url, enum httpMethod method) {
   return result;
 }
 
+void free_string(string *str) {
+  free(str->ptr);
+  free(str);
+}
+
 /*
 int main(int argc, const char *argv[])
 {
