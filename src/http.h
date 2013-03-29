@@ -2,7 +2,7 @@
 #define HEADER_HTTP_H
 #include <curl/curl.h>
 
-typedef struct string String;
+typedef struct string string;
 
 struct string {
   char *ptr;

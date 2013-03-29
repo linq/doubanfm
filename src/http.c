@@ -63,7 +63,7 @@ string *request_url(char *url, enum httpMethod method) {
 /*
 int main(int argc, const char *argv[])
 {
-  char *url = "www.baidu.com";
+  char *url = argv[1];
   string *result = request_url(url, GET);
   printf("result is %s\n", result->ptr);
   return 0;

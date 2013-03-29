@@ -11,7 +11,7 @@ int request_user_info(user_info *info, char *username, char *passwd) {
       username, passwd);
   request_url(url, POST);
   printf("result is %s: \n", result.ptr);
-  to_user_info(&result, info);
+  to_user_info(&result);
   free(result.ptr);
   return 0;
 }
@@ -22,7 +22,7 @@ int request_songs(user_info *info, song_info *songs) {
   sprintf(url, "http://www.douban.com/j/app/radio/people?app_name=radio_desktop_win&version=100&user_id=%s&expire=%s&token=%s&type=n&channel=0",
       info->user_id, info->expire, info->token);
   request_url(url, GET);
-  to_song_infos(&result, songs);
+  to_song_infos(&result);
   free(result.ptr);
   return 0;
 }

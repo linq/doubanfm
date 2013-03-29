@@ -1,6 +1,14 @@
-TESTS = check_http
-check_PROGRAMS = check_http
+TESTS = check_doubanfm
+check_PROGRAMS = check_doubanfm
 LIBS=-lcurl -lm
-check_http_SOURCES = check_http.c $(top_builddir)/src/http.c $(top_builddir)/src/http.h
-check_http_CFLAGS = -I $(top_builddir)/lib/ -I $(top_builddir)/src/ @CHECK_CFLAGS@
-check_http_LDADD = $(top_builddir)/lib/libcjson.a @CHECK_LIBS@
+check_doubanfm_SOURCES = \
+  check_doubanfm.h \
+  check_doubanfm_main.c \
+	check_json.c \
+  check_http.c \
+	$(top_builddir)/src/http.c \
+	$(top_builddir)/src/http.h \
+	$(top_builddir)/src/json.h \
+	$(top_builddir)/src/json.c
+check_doubanfm_CFLAGS = -I $(top_builddir)/lib/ -I $(top_builddir)/src/ @CHECK_CFLAGS@
+check_doubanfm_LDADD = $(top_builddir)/lib/libcjson.a @CHECK_LIBS@

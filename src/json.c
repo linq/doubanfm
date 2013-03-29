@@ -1,13 +1,16 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
-#include "http.h"
-#include "douban.h"
 #include "cJSON.h"
+#include "json.h"
 
-int to_user_info(string *json_string, user_info *user) {
-  cJSON *json;
-  json = cJSON_Parse(json_string->ptr);
+user_info *to_user_info(string *json_string) {
+  if (json_string == NULL || json_string->len == 0 || json_string->ptr == NULL)
+    return NULL;
+
+  user_info *user = malloc(sizeof(user_info));
+  memset(user, '\0', sizeof(user_info));
+  cJSON *json = cJSON_Parse(json_string->ptr);
   char *user_id = cJSON_GetObjectItem(json, "user_id")->valuestring;
   char *token = cJSON_GetObjectItem(json, "token")->valuestring;
   char *expire = cJSON_GetObjectItem(json, "expire")->valuestring;
@@ -16,16 +19,20 @@ int to_user_info(string *json_string, user_info *user) {
   strcpy(user->expire, expire);
   cJSON_Delete(json);
 
-  return 0;
+  return user;
 }
 
-int to_song_infos(string *json_string, song_info *songs) {
+song_list *to_song_infos(string *json_string) {
   int i;
   cJSON *array, *json;
+  song_list *result;
+  song_info *songs;
+  result = malloc(sizeof(song_list));
   json = cJSON_Parse(json_string->ptr);
   array = cJSON_GetObjectItem(json, "song");
   int size = cJSON_GetArraySize(array);
-  songs = (song_info *)malloc(size * sizeof(song_info));
+  result->length = size;
+  songs = malloc(size * sizeof(song_info));
   for (i = 0; i < size; i++) {
     json = cJSON_GetArrayItem(array, i);
     char *title = cJSON_GetObjectItem(json, "title")->valuestring;
@@ -35,8 +42,17 @@ int to_song_infos(string *json_string, song_info *songs) {
     strcpy(songs[i].artist, artist);
     strcpy(songs[i].url, url);
   }
+  result->songs = songs;
 
-  printf("in jsonc, size is: %u\n", sizeof(songs)/sizeof(songs[0]));
   cJSON_Delete(json);
-  return 0;
+  return result;
+}
+
+void free_user_info(user_info *user) {
+  free(user);
+}
+
+void free_songs(song_list *songs) {
+  free(songs->songs);
+  free(songs);
 }

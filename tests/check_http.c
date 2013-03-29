@@ -2,10 +2,11 @@
 #include <check.h>
 #include <stdlib.h>
 #include "http.h"
+#include "check_doubanfm.h"
 
 START_TEST(request_url_test) {
-  char *url = "www.baidu.com";
-  String *result = request_url(url, GET);
+  char *url = "www.cnbeta.com";
+  string *result = request_url(url, GET);
   fail_unless(result->len != 0, "do request failed");
 }
 END_TEST
@@ -18,16 +19,4 @@ Suite *http_suite(void) {
   suite_add_tcase(suite, tc_request_url);
 
   return suite;
-}
-
-int main(void)
-{
-  
-  int number_failed = 0;
-  Suite *suite = http_suite();
-  SRunner *runner = srunner_create(suite);
-  srunner_run_all(runner, CK_NORMAL);
-  number_failed = srunner_ntests_failed(runner);
-  srunner_free(runner);
-  return (number_failed == 0) ? EXIT_SUCCESS : EXIT_FAILURE;
 }
