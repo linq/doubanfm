@@ -62,8 +62,8 @@ CONFIG_CLEAN_FILES =
 CONFIG_CLEAN_VPATH_FILES =
 am__installdirs = "$(DESTDIR)$(bindir)"
 PROGRAMS = $(bin_PROGRAMS)
-am_douban_OBJECTS = douban-httpHelper.$(OBJEXT) \
-	douban-douban.$(OBJEXT) douban-json.$(OBJEXT)
+am_douban_OBJECTS = douban-http.$(OBJEXT) douban-douban.$(OBJEXT) \
+	douban-json.$(OBJEXT)
 douban_OBJECTS = $(am_douban_OBJECTS)
 douban_DEPENDENCIES = ../lib/libcjson.a
 douban_LINK = $(CCLD) $(douban_CFLAGS) $(CFLAGS) $(AM_LDFLAGS) \
@@ -137,6 +137,8 @@ AWK = gawk
 CC = gcc
 CCDEPMODE = depmode=gcc3
 CFLAGS = -g -O2
+CHECK_CFLAGS = 
+CHECK_LIBS = -lcheck
 CPP = gcc -E
 CPPFLAGS = 
 CYGPATH_W = echo
@@ -215,8 +217,7 @@ target_alias =
 top_build_prefix = ../
 top_builddir = ..
 top_srcdir = ..
-AUTOMAKE_OPTIONS = foreign
-douban_SOURCES = http.h httpHelper.c douban.c douban.h json.h json.c
+douban_SOURCES = http.h http.c douban.c douban.h json.h json.c
 douban_LDADD = ../lib/libcjson.a
 douban_CFLAGS = -I ../lib/
 all: all-am
@@ -306,7 +307,7 @@ distclean-compile:
 	-rm -f *.tab.c
 
 include ./$(DEPDIR)/douban-douban.Po
-include ./$(DEPDIR)/douban-httpHelper.Po
+include ./$(DEPDIR)/douban-http.Po
 include ./$(DEPDIR)/douban-json.Po
 
 .c.o:
@@ -323,19 +324,19 @@ include ./$(DEPDIR)/douban-json.Po
 #	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
 #	$(AM_V_CC_no)$(COMPILE) -c `$(CYGPATH_W) '$<'`
 
-douban-httpHelper.o: httpHelper.c
-	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(douban_CFLAGS) $(CFLAGS) -MT douban-httpHelper.o -MD -MP -MF $(DEPDIR)/douban-httpHelper.Tpo -c -o douban-httpHelper.o `test -f 'httpHelper.c' || echo '$(srcdir)/'`httpHelper.c
-	$(AM_V_at)$(am__mv) $(DEPDIR)/douban-httpHelper.Tpo $(DEPDIR)/douban-httpHelper.Po
-#	$(AM_V_CC)source='httpHelper.c' object='douban-httpHelper.o' libtool=no \
+douban-http.o: http.c
+	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(douban_CFLAGS) $(CFLAGS) -MT douban-http.o -MD -MP -MF $(DEPDIR)/douban-http.Tpo -c -o douban-http.o `test -f 'http.c' || echo '$(srcdir)/'`http.c
+	$(AM_V_at)$(am__mv) $(DEPDIR)/douban-http.Tpo $(DEPDIR)/douban-http.Po
+#	$(AM_V_CC)source='http.c' object='douban-http.o' libtool=no \
 #	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
-#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(douban_CFLAGS) $(CFLAGS) -c -o douban-httpHelper.o `test -f 'httpHelper.c' || echo '$(srcdir)/'`httpHelper.c
+#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(douban_CFLAGS) $(CFLAGS) -c -o douban-http.o `test -f 'http.c' || echo '$(srcdir)/'`http.c
 
-douban-httpHelper.obj: httpHelper.c
-	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(douban_CFLAGS) $(CFLAGS) -MT douban-httpHelper.obj -MD -MP -MF $(DEPDIR)/douban-httpHelper.Tpo -c -o douban-httpHelper.obj `if test -f 'httpHelper.c'; then $(CYGPATH_W) 'httpHelper.c'; else $(CYGPATH_W) '$(srcdir)/httpHelper.c'; fi`
-	$(AM_V_at)$(am__mv) $(DEPDIR)/douban-httpHelper.Tpo $(DEPDIR)/douban-httpHelper.Po
-#	$(AM_V_CC)source='httpHelper.c' object='douban-httpHelper.obj' libtool=no \
+douban-http.obj: http.c
+	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(douban_CFLAGS) $(CFLAGS) -MT douban-http.obj -MD -MP -MF $(DEPDIR)/douban-http.Tpo -c -o douban-http.obj `if test -f 'http.c'; then $(CYGPATH_W) 'http.c'; else $(CYGPATH_W) '$(srcdir)/http.c'; fi`
+	$(AM_V_at)$(am__mv) $(DEPDIR)/douban-http.Tpo $(DEPDIR)/douban-http.Po
+#	$(AM_V_CC)source='http.c' object='douban-http.obj' libtool=no \
 #	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
-#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(douban_CFLAGS) $(CFLAGS) -c -o douban-httpHelper.obj `if test -f 'httpHelper.c'; then $(CYGPATH_W) 'httpHelper.c'; else $(CYGPATH_W) '$(srcdir)/httpHelper.c'; fi`
+#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(douban_CFLAGS) $(CFLAGS) -c -o douban-http.obj `if test -f 'http.c'; then $(CYGPATH_W) 'http.c'; else $(CYGPATH_W) '$(srcdir)/http.c'; fi`
 
 douban-douban.o: douban.c
 	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(douban_CFLAGS) $(CFLAGS) -MT douban-douban.o -MD -MP -MF $(DEPDIR)/douban-douban.Tpo -c -o douban-douban.o `test -f 'douban.c' || echo '$(srcdir)/'`douban.c

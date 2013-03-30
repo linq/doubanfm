@@ -1,2 +1,2 @@
-AUTOMAKE_OPTIONS = foreign
+# AUTOMAKE_OPTIONS = foreign
 SUBDIRS = lib po src doc man tests

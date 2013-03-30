@@ -88,6 +88,8 @@ AWK = gawk
 CC = gcc
 CCDEPMODE = depmode=gcc3
 CFLAGS = -g -O2
+CHECK_CFLAGS = 
+CHECK_LIBS = -lcheck
 CPP = gcc -E
 CPPFLAGS = 
 CYGPATH_W = echo

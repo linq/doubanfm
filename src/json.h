@@ -2,6 +2,6 @@
   #define HEADER_JSON_H
 
 #include "douban.h"
-int to_user_info(struct string *json_string, struct user_info *user);
+int to_user_info(String *json_string, user_info *user);
 
 #endif

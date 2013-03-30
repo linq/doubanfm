@@ -50,7 +50,7 @@ POST_UNINSTALL = :
 subdir = .
 DIST_COMMON = $(srcdir)/Makefile.in $(srcdir)/Makefile.am \
 	$(top_srcdir)/configure $(am__configure_deps) \
-	$(srcdir)/config.h.in AUTHORS ChangeLog NEWS depcomp \
+	$(srcdir)/config.h.in AUTHORS ChangeLog NEWS compile depcomp \
 	install-sh missing
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
 am__aclocal_m4_deps = $(top_srcdir)/configure.ac
@@ -171,6 +171,8 @@ AWK = gawk
 CC = gcc
 CCDEPMODE = depmode=gcc3
 CFLAGS = -g -O2
+CHECK_CFLAGS = 
+CHECK_LIBS = -lcheck
 CPP = gcc -E
 CPPFLAGS = 
 CYGPATH_W = echo
@@ -249,7 +251,8 @@ target_alias =
 top_build_prefix = 
 top_builddir = .
 top_srcdir = .
-AUTOMAKE_OPTIONS = foreign
+
+# AUTOMAKE_OPTIONS = foreign
 SUBDIRS = lib po src doc man tests
 all: config.h
 	$(MAKE) $(AM_MAKEFLAGS) all-recursive

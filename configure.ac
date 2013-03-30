@@ -10,8 +10,10 @@ AM_INIT_AUTOMAKE([foreign -Wall -Werror])
 
 # Checks for programs.
 AC_PROG_CC
+AM_PROG_CC_C_O
 
 # Checks for libraries.
+AM_PATH_CHECK()
 AC_PROG_RANLIB
 
 # Checks for header files.

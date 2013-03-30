@@ -2,6 +2,8 @@
 #define HEADER_HTTP_H
 #include <curl/curl.h>
 
+typedef struct string String;
+
 struct string {
   char *ptr;
   size_t len;
@@ -12,5 +14,5 @@ enum httpMethod {
 };
 
 // 执行http请求
-int doRequest(char *url, struct string *result, enum httpMethod method);
+string *request_url(char *url, enum httpMethod method);
 #endif
