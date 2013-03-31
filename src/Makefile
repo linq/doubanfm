@@ -63,7 +63,7 @@ CONFIG_CLEAN_VPATH_FILES =
 am__installdirs = "$(DESTDIR)$(bindir)"
 PROGRAMS = $(bin_PROGRAMS)
 am_douban_OBJECTS = douban-http.$(OBJEXT) douban-douban.$(OBJEXT) \
-	douban-json.$(OBJEXT)
+	douban-json.$(OBJEXT) douban-common.$(OBJEXT)
 douban_OBJECTS = $(am_douban_OBJECTS)
 douban_DEPENDENCIES = ../lib/libcjson.a
 douban_LINK = $(CCLD) $(douban_CFLAGS) $(CFLAGS) $(AM_LDFLAGS) \
@@ -127,12 +127,12 @@ am__define_uniq_tagged_files = \
 ETAGS = etags
 CTAGS = ctags
 DISTFILES = $(DIST_COMMON) $(DIST_SOURCES) $(TEXINFOS) $(EXTRA_DIST)
-ACLOCAL = ${SHELL} /home/linq/data/doubanfm/missing aclocal-1.13
+ACLOCAL = ${SHELL} /home/linq/code/doubanfm/missing aclocal-1.13
 AMTAR = $${TAR-tar}
 AM_DEFAULT_VERBOSITY = 1
-AUTOCONF = ${SHELL} /home/linq/data/doubanfm/missing autoconf
-AUTOHEADER = ${SHELL} /home/linq/data/doubanfm/missing autoheader
-AUTOMAKE = ${SHELL} /home/linq/data/doubanfm/missing automake-1.13
+AUTOCONF = ${SHELL} /home/linq/code/doubanfm/missing autoconf
+AUTOHEADER = ${SHELL} /home/linq/code/doubanfm/missing autoheader
+AUTOMAKE = ${SHELL} /home/linq/code/doubanfm/missing automake-1.13
 AWK = gawk
 CC = gcc
 CCDEPMODE = depmode=gcc3
@@ -159,7 +159,7 @@ LDFLAGS =
 LIBOBJS = 
 LIBS = -lcurl -lm
 LTLIBOBJS = 
-MAKEINFO = ${SHELL} /home/linq/data/doubanfm/missing makeinfo
+MAKEINFO = ${SHELL} /home/linq/code/doubanfm/missing makeinfo
 MKDIR_P = /usr/bin/mkdir -p
 OBJEXT = o
 PACKAGE = doubanfm
@@ -175,10 +175,10 @@ SET_MAKE =
 SHELL = /bin/sh
 STRIP = 
 VERSION = 1.0
-abs_builddir = /home/linq/data/doubanfm/src
-abs_srcdir = /home/linq/data/doubanfm/src
-abs_top_builddir = /home/linq/data/doubanfm
-abs_top_srcdir = /home/linq/data/doubanfm
+abs_builddir = /home/linq/code/doubanfm/src
+abs_srcdir = /home/linq/code/doubanfm/src
+abs_top_builddir = /home/linq/code/doubanfm
+abs_top_srcdir = /home/linq/code/doubanfm
 ac_ct_CC = gcc
 am__include = include
 am__leading_dot = .
@@ -197,7 +197,7 @@ host_alias =
 htmldir = ${docdir}
 includedir = ${prefix}/include
 infodir = ${datarootdir}/info
-install_sh = ${SHELL} /home/linq/data/doubanfm/install-sh
+install_sh = ${SHELL} /home/linq/code/doubanfm/install-sh
 libdir = ${exec_prefix}/lib
 libexecdir = ${exec_prefix}/libexec
 localedir = ${datarootdir}/locale
@@ -217,7 +217,7 @@ target_alias =
 top_build_prefix = ../
 top_builddir = ..
 top_srcdir = ..
-douban_SOURCES = http.h http.c douban.c douban.h json.h json.c
+douban_SOURCES = http.h http.c douban.c douban.h json.h json.c common.h common.c
 douban_LDADD = ../lib/libcjson.a
 douban_CFLAGS = -I ../lib/
 all: all-am
@@ -306,6 +306,7 @@ mostlyclean-compile:
 distclean-compile:
 	-rm -f *.tab.c
 
+include ./$(DEPDIR)/douban-common.Po
 include ./$(DEPDIR)/douban-douban.Po
 include ./$(DEPDIR)/douban-http.Po
 include ./$(DEPDIR)/douban-json.Po
@@ -365,6 +366,20 @@ douban-json.obj: json.c
 #	$(AM_V_CC)source='json.c' object='douban-json.obj' libtool=no \
 #	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
 #	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(douban_CFLAGS) $(CFLAGS) -c -o douban-json.obj `if test -f 'json.c'; then $(CYGPATH_W) 'json.c'; else $(CYGPATH_W) '$(srcdir)/json.c'; fi`
+
+douban-common.o: common.c
+	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(douban_CFLAGS) $(CFLAGS) -MT douban-common.o -MD -MP -MF $(DEPDIR)/douban-common.Tpo -c -o douban-common.o `test -f 'common.c' || echo '$(srcdir)/'`common.c
+	$(AM_V_at)$(am__mv) $(DEPDIR)/douban-common.Tpo $(DEPDIR)/douban-common.Po
+#	$(AM_V_CC)source='common.c' object='douban-common.o' libtool=no \
+#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
+#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(douban_CFLAGS) $(CFLAGS) -c -o douban-common.o `test -f 'common.c' || echo '$(srcdir)/'`common.c
+
+douban-common.obj: common.c
+	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(douban_CFLAGS) $(CFLAGS) -MT douban-common.obj -MD -MP -MF $(DEPDIR)/douban-common.Tpo -c -o douban-common.obj `if test -f 'common.c'; then $(CYGPATH_W) 'common.c'; else $(CYGPATH_W) '$(srcdir)/common.c'; fi`
+	$(AM_V_at)$(am__mv) $(DEPDIR)/douban-common.Tpo $(DEPDIR)/douban-common.Po
+#	$(AM_V_CC)source='common.c' object='douban-common.obj' libtool=no \
+#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
+#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(douban_CFLAGS) $(CFLAGS) -c -o douban-common.obj `if test -f 'common.c'; then $(CYGPATH_W) 'common.c'; else $(CYGPATH_W) '$(srcdir)/common.c'; fi`
 
 ID: $(am__tagged_files)
 	$(am__define_uniq_tagged_files); mkid -fID $$unique

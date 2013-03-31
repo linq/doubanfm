@@ -6,6 +6,8 @@ check_doubanfm_SOURCES = \
   check_doubanfm_main.c \
 	check_json.c \
   check_http.c \
+	$(top_builddir)/src/common.h \
+	$(top_builddir)/src/common.c \
 	$(top_builddir)/src/http.c \
 	$(top_builddir)/src/http.h \
 	$(top_builddir)/src/json.h \

@@ -32,7 +32,7 @@ check_doubanfm-json.o: ../src/json.c /usr/include/stdio.h \
  /usr/include/bits/posix2_lim.h /usr/include/sys/time.h \
  /usr/include/curl/easy.h /usr/include/curl/multi.h \
  /usr/include/curl/curl.h /usr/include/curl/typecheck-gcc.h \
- ../src/douban.h
+ ../src/common.h
 
 /usr/include/stdio.h:
 
@@ -172,4 +172,4 @@ check_doubanfm-json.o: ../src/json.c /usr/include/stdio.h \
 
 /usr/include/curl/typecheck-gcc.h:
 
-../src/douban.h:
+../src/common.h:

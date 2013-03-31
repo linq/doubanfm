@@ -64,7 +64,8 @@ am_check_doubanfm_OBJECTS =  \
 	check_doubanfm-check_doubanfm_main.$(OBJEXT) \
 	check_doubanfm-check_json.$(OBJEXT) \
 	check_doubanfm-check_http.$(OBJEXT) \
-	check_doubanfm-http.$(OBJEXT) check_doubanfm-json.$(OBJEXT)
+	check_doubanfm-common.$(OBJEXT) check_doubanfm-http.$(OBJEXT) \
+	check_doubanfm-json.$(OBJEXT)
 check_doubanfm_OBJECTS = $(am_check_doubanfm_OBJECTS)
 check_doubanfm_DEPENDENCIES = $(top_builddir)/lib/libcjson.a
 check_doubanfm_LINK = $(CCLD) $(check_doubanfm_CFLAGS) $(CFLAGS) \
@@ -332,12 +333,12 @@ TEST_LOG_DRIVER = $(SHELL) $(top_srcdir)/test-driver
 TEST_LOG_COMPILE = $(TEST_LOG_COMPILER) $(AM_TEST_LOG_FLAGS) \
 	$(TEST_LOG_FLAGS)
 DISTFILES = $(DIST_COMMON) $(DIST_SOURCES) $(TEXINFOS) $(EXTRA_DIST)
-ACLOCAL = ${SHELL} /home/linq/data/doubanfm/missing aclocal-1.13
+ACLOCAL = ${SHELL} /home/linq/code/doubanfm/missing aclocal-1.13
 AMTAR = $${TAR-tar}
 AM_DEFAULT_VERBOSITY = 1
-AUTOCONF = ${SHELL} /home/linq/data/doubanfm/missing autoconf
-AUTOHEADER = ${SHELL} /home/linq/data/doubanfm/missing autoheader
-AUTOMAKE = ${SHELL} /home/linq/data/doubanfm/missing automake-1.13
+AUTOCONF = ${SHELL} /home/linq/code/doubanfm/missing autoconf
+AUTOHEADER = ${SHELL} /home/linq/code/doubanfm/missing autoheader
+AUTOMAKE = ${SHELL} /home/linq/code/doubanfm/missing automake-1.13
 AWK = gawk
 CC = gcc
 CCDEPMODE = depmode=gcc3
@@ -364,7 +365,7 @@ LDFLAGS =
 LIBOBJS = 
 LIBS = -lcurl -lm
 LTLIBOBJS = 
-MAKEINFO = ${SHELL} /home/linq/data/doubanfm/missing makeinfo
+MAKEINFO = ${SHELL} /home/linq/code/doubanfm/missing makeinfo
 MKDIR_P = /usr/bin/mkdir -p
 OBJEXT = o
 PACKAGE = doubanfm
@@ -380,10 +381,10 @@ SET_MAKE =
 SHELL = /bin/sh
 STRIP = 
 VERSION = 1.0
-abs_builddir = /home/linq/data/doubanfm/tests
-abs_srcdir = /home/linq/data/doubanfm/tests
-abs_top_builddir = /home/linq/data/doubanfm
-abs_top_srcdir = /home/linq/data/doubanfm
+abs_builddir = /home/linq/code/doubanfm/tests
+abs_srcdir = /home/linq/code/doubanfm/tests
+abs_top_builddir = /home/linq/code/doubanfm
+abs_top_srcdir = /home/linq/code/doubanfm
 ac_ct_CC = gcc
 am__include = include
 am__leading_dot = .
@@ -402,7 +403,7 @@ host_alias =
 htmldir = ${docdir}
 includedir = ${prefix}/include
 infodir = ${datarootdir}/info
-install_sh = ${SHELL} /home/linq/data/doubanfm/install-sh
+install_sh = ${SHELL} /home/linq/code/doubanfm/install-sh
 libdir = ${exec_prefix}/lib
 libexecdir = ${exec_prefix}/libexec
 localedir = ${datarootdir}/locale
@@ -427,6 +428,8 @@ check_doubanfm_SOURCES = \
   check_doubanfm_main.c \
 	check_json.c \
   check_http.c \
+	$(top_builddir)/src/common.h \
+	$(top_builddir)/src/common.c \
 	$(top_builddir)/src/http.c \
 	$(top_builddir)/src/http.h \
 	$(top_builddir)/src/json.h \
@@ -484,6 +487,7 @@ distclean-compile:
 include ./$(DEPDIR)/check_doubanfm-check_doubanfm_main.Po
 include ./$(DEPDIR)/check_doubanfm-check_http.Po
 include ./$(DEPDIR)/check_doubanfm-check_json.Po
+include ./$(DEPDIR)/check_doubanfm-common.Po
 include ./$(DEPDIR)/check_doubanfm-http.Po
 include ./$(DEPDIR)/check_doubanfm-json.Po
 
@@ -542,6 +546,20 @@ check_doubanfm-check_http.obj: check_http.c
 #	$(AM_V_CC)source='check_http.c' object='check_doubanfm-check_http.obj' libtool=no \
 #	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
 #	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(check_doubanfm_CFLAGS) $(CFLAGS) -c -o check_doubanfm-check_http.obj `if test -f 'check_http.c'; then $(CYGPATH_W) 'check_http.c'; else $(CYGPATH_W) '$(srcdir)/check_http.c'; fi`
+
+check_doubanfm-common.o: $(top_builddir)/src/common.c
+	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(check_doubanfm_CFLAGS) $(CFLAGS) -MT check_doubanfm-common.o -MD -MP -MF $(DEPDIR)/check_doubanfm-common.Tpo -c -o check_doubanfm-common.o `test -f '$(top_builddir)/src/common.c' || echo '$(srcdir)/'`$(top_builddir)/src/common.c
+	$(AM_V_at)$(am__mv) $(DEPDIR)/check_doubanfm-common.Tpo $(DEPDIR)/check_doubanfm-common.Po
+#	$(AM_V_CC)source='$(top_builddir)/src/common.c' object='check_doubanfm-common.o' libtool=no \
+#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
+#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(check_doubanfm_CFLAGS) $(CFLAGS) -c -o check_doubanfm-common.o `test -f '$(top_builddir)/src/common.c' || echo '$(srcdir)/'`$(top_builddir)/src/common.c
+
+check_doubanfm-common.obj: $(top_builddir)/src/common.c
+	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(check_doubanfm_CFLAGS) $(CFLAGS) -MT check_doubanfm-common.obj -MD -MP -MF $(DEPDIR)/check_doubanfm-common.Tpo -c -o check_doubanfm-common.obj `if test -f '$(top_builddir)/src/common.c'; then $(CYGPATH_W) '$(top_builddir)/src/common.c'; else $(CYGPATH_W) '$(srcdir)/$(top_builddir)/src/common.c'; fi`
+	$(AM_V_at)$(am__mv) $(DEPDIR)/check_doubanfm-common.Tpo $(DEPDIR)/check_doubanfm-common.Po
+#	$(AM_V_CC)source='$(top_builddir)/src/common.c' object='check_doubanfm-common.obj' libtool=no \
+#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
+#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(check_doubanfm_CFLAGS) $(CFLAGS) -c -o check_doubanfm-common.obj `if test -f '$(top_builddir)/src/common.c'; then $(CYGPATH_W) '$(top_builddir)/src/common.c'; else $(CYGPATH_W) '$(srcdir)/$(top_builddir)/src/common.c'; fi`
 
 check_doubanfm-http.o: $(top_builddir)/src/http.c
 	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(check_doubanfm_CFLAGS) $(CFLAGS) -MT check_doubanfm-http.o -MD -MP -MF $(DEPDIR)/check_doubanfm-http.Tpo -c -o check_doubanfm-http.o `test -f '$(top_builddir)/src/http.c' || echo '$(srcdir)/'`$(top_builddir)/src/http.c

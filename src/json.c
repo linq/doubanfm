@@ -23,11 +23,19 @@ user_info *to_user_info(string *json_string) {
 }
 
 song_list *to_song_infos(string *json_string) {
-  int i;
+
   cJSON *array, *json;
+  int i;
   song_list *result;
   song_info *songs;
+
   result = malloc(sizeof(song_list));
+  if (json_string == NULL || json_string->len == 0 || json_string->ptr == NULL) {
+    result->length = 0;
+    result->songs = NULL;
+    return result;
+  }
+
   json = cJSON_Parse(json_string->ptr);
   array = cJSON_GetObjectItem(json, "song");
   int size = cJSON_GetArraySize(array);
