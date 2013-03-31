@@ -33,3 +33,5 @@ parser.[ch]
 stamp-*
 tstidl
 y.output
+*.log
+*.trs
