@@ -1,6 +1,3 @@
-#include <stdio.h>
-#include <check.h>
-#include <stdlib.h>
 #include "http.h"
 #include "check_doubanfm.h"
 

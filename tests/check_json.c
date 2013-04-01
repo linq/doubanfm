@@ -1,6 +1,3 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <check.h>
 #include <string.h>
 #include "json.h"
 #include "check_doubanfm.h"

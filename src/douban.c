@@ -1,6 +1,8 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
+#include "common.h"
+#include "douban.h"
 #include "http.h"
 #include "json.h"
 
@@ -23,10 +25,4 @@ song_list *request_songs(user_info *info) {
   song_list *result = to_song_infos(json_string);
   free_string(json_string);
   return result;
-}
-
-int main(int argc, const char *argv[])
-{
-  printf("hello\n");
-  return 0;
 }
